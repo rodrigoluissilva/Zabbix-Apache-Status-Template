@@ -10,11 +10,11 @@
 # zapache: https://github.com/lorf/zapache
 # ApacheStatsForZabbix: https://github.com/gpmidi/zabbix-apache-stats
 #
-# Version: 0.1
+# Version: 0.2
 #
  
 name="zbxApacheStatusCheck"
-version="0.1"
+version="0.2"
 
 # Test  if  your  getopt(1)  is this enhanced version or an old version
 getopt --test > /dev/null
@@ -89,6 +89,8 @@ Options:
   --dumpconfig          Show the atual config
 
   -d, --debug           Run using Debug mode
+
+  -t, --test            Do not send data, simply test, use with --debug
 "
 }
 
@@ -98,6 +100,8 @@ PORT=80
 PROTO=http
 ZABBIXSERVER=localhost
 SENDER=/usr/bin/zabbix_sender
+DEBUG=0
+TEST=0
 ZABBIXPORT=10051
 ZABBIXSOURCE=localhost
 DEFAULTCONFIG="Total Accesses
@@ -112,8 +116,8 @@ IdleWorkers
 Scoreboard"
 
 # Use getopt(1) program to parse command line options
-SHORT=vhl:o:p:r:z:u:a:s:q:c:k:d
-LONG=version,help,url:,host:,port:,proto:,zabbixserver:,user:,passwd:,sender:,zabbixport:,zabbixsource:,config:,debug,dumpconfig
+SHORT=vhl:o:p:r:z:u:a:s:q:c:k:dt
+LONG=version,help,url:,host:,port:,proto:,zabbixserver:,user:,passwd:,sender:,zabbixport:,zabbixsource:,config:,debug,dumpconfig,test
 PARSED=`getopt --options $SHORT --longoptions $LONG --name "$0" -- "$@"`
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
 eval set -- "$PARSED"
@@ -183,6 +187,10 @@ while true; do
         --dumpconfig)
             echo "$DEFAULTCONFIG"
             exit 0
+            ;;
+        -t|--test)
+            TEST=1
+            shift
             ;;
         --)
             shift
@@ -273,7 +281,7 @@ done < $CONFIGFILE
 SENDER_CMD="$SENDER -v --zabbix-server $ZABBIXSERVER --port $ZABBIXPORT --input-file $SENDERFILE"
 
 # DEBUG
-if [[ -n $DEBUG ]]; then
+if [[ $DEBUG = 1 ]]; then
 	echo -e "\n########################################\n"
 	echo -e "Statistics available on your server:\n"
 	cat $STATUSFILE | awk -F: '{print $1}'
@@ -308,12 +316,14 @@ if [[ -n $DEBUG ]]; then
 	echo -e "Command line to send data to Zabbix\n"
 	echo "$SENDER_CMD"
 	
-	echo -e "\n########################################\n"
-	echo -e "zabbix_sender output\n"
-	$SENDER_CMD
-	echo -e "\n"
+	if [[ $TEST = 0 ]]; then
+		echo -e "\n########################################\n"
+		echo -e "zabbix_sender output\n"
+		$SENDER_CMD
+		echo -e "\n"
+	fi
 else
-	$SENDER_CMD > /dev/null
+	[[ $TEST = 0 ]] && $SENDER_CMD > /dev/null
 fi
 
 # Housekeeping
