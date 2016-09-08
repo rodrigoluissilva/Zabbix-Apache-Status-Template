@@ -10,11 +10,9 @@
 # zapache: https://github.com/lorf/zapache
 # ApacheStatsForZabbix: https://github.com/gpmidi/zabbix-apache-stats
 #
-# Version: 0.2
-#
  
 name="zbxApacheStatusCheck"
-version="0.2"
+version="0.3"
 
 # Test  if  your  getopt(1)  is this enhanced version or an old version
 getopt --test > /dev/null
@@ -50,12 +48,15 @@ Options:
   -o HOST, --host=HOST  Apache host to collect info.
                         [default: localhost]
 
-  -p PORT, --port=PORT  Apache port to collect info.
+  -p PORT, --port=PORT  Apache port to collect info
                         [default: 80]
 
   -r PROTO, --proto=PROTO
                         Protocol to use. [http or https]
                         [default: http]
+
+  --TIMEOUT=seconds     Connection timeout
+                        [default: 30]
 
   -z ZABBIXSERVER, --zabbixserver=ZABBIXSERVER
                         Hostname or IP address of Zabbix server
@@ -104,6 +105,7 @@ DEBUG=0
 TEST=0
 ZABBIXPORT=10051
 ZABBIXSOURCE=localhost
+TIMEOUT=30
 DEFAULTCONFIG="Total Accesses
 Total kBytes
 CPULoad
@@ -117,7 +119,7 @@ Scoreboard"
 
 # Use getopt(1) program to parse command line options
 SHORT=vhl:o:p:r:z:u:a:s:q:c:k:dt
-LONG=version,help,url:,host:,port:,proto:,zabbixserver:,user:,passwd:,sender:,zabbixport:,zabbixsource:,config:,debug,dumpconfig,test
+LONG=version,help,url:,host:,port:,proto:,zabbixserver:,user:,passwd:,sender:,zabbixport:,zabbixsource:,config:,timeout:,debug,dumpconfig,test
 PARSED=`getopt --options $SHORT --longoptions $LONG --name "$0" -- "$@"`
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
 eval set -- "$PARSED"
@@ -176,6 +178,10 @@ while true; do
             ZABBIXSOURCE="$2"
             shift 2
             ;;
+        --timeout)
+            TIMEOUT="$2"
+            shift 2
+            ;;
         -k|--config)
             CONFIGFILE="$2"
             shift 2
@@ -226,16 +232,17 @@ fi
 # get data using curl or wget
 curl="`which curl`"
 if [ "$curl" ]; then
-	$curl --insecure --silent --location -H "Cache-Control: no-cache" "$STATUS_URL" > $STATUSFILE
+	GET_CMD="$curl --insecure --max-time $TIMEOUT --silent --location -H \"Cache-Control: no-cache\" \"$STATUS_URL\""
 else
 	wget="`which wget`"
 	if [ "$wget" ]; then
-		$wget --no-check-certificate --quiet --header "Cache-Control: no-cache" -O - "$STATUS_URL" > $STATUSFILE
+		GET_CMD="$wget --no-check-certificate --timeout=$TIMEOUT --quiet --header \"Cache-Control: no-cache\" -O - \"$STATUS_URL\""
 	else
 		echo "I can not find curl or wget on your system"
 		exit 1
 	fi
 fi
+eval $GET_CMD > $STATUSFILE
 
 # read the config file to get all relevant statistics
 while read STATNAME
@@ -310,20 +317,23 @@ if [[ $DEBUG = 1 ]]; then
 	echo "--url=$URL"
 	echo "--user=$APACHEUSER"
 	echo "--passwd=$APACHEPASSWD"
+	echo "--timeout=$TIMEOUT"
 	echo "Final URL: $STATUS_URL"
 	
 	echo -e "\n########################################\n"
+	echo -e "Command line to collect data from Apache\n"
+	echo -e "$GET_CMD\n"
 	echo -e "Command line to send data to Zabbix\n"
-	echo "$SENDER_CMD"
+	echo -e "$SENDER_CMD\n"
 	
 	if [[ $TEST = 0 ]]; then
 		echo -e "\n########################################\n"
 		echo -e "zabbix_sender output\n"
-		$SENDER_CMD
+		eval $SENDER_CMD
 		echo -e "\n"
 	fi
 else
-	[[ $TEST = 0 ]] && $SENDER_CMD > /dev/null
+	[[ $TEST = 0 ]] && eval $SENDER_CMD > /dev/null
 fi
 
 # Housekeeping
