@@ -242,7 +242,18 @@ else
 		exit 1
 	fi
 fi
+
+# get data from server
 eval $GET_CMD > $STATUSFILE
+RET_VAL=$?
+
+# tall zabbix about some failure getting data
+echo -n "\"$ZABBIXSOURCE\" \"custom.apache[failed]\" " >> $SENDERFILE
+if [[ $RET_VAL = 0 ]]; then
+	echo 0 >> $SENDERFILE
+else
+	echo 1 >> $SENDERFILE;
+fi
 
 # read the config file to get all relevant statistics
 while read STATNAME
@@ -250,36 +261,36 @@ do
 	if [[ $STATNAME = "Scoreboard" ]]; then
 		SCOREBOARD=`fgrep -w "$STATNAME:" $STATUSFILE | sed "s/$STATNAME: //"`
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[WaitingForConnection]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"_")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"_")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[StartingUp]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"S")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"S")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[ReadingRequest]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"R")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"R")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[SendingReply]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"W")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"W")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[KeepAlive]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"K")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"K")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[DNSLookup]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"D")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"D")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[ClosingConnection]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"C")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"C")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[Logging]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"L")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"L")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[GracefullyFinishing]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"G")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"G")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[IdleCleanupOfWorker]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"I")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"I")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[OpenSlotWithNoCurrentProcess]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,".")-1}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,".")}' >> $SENDERFILE
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[TotalWorkers]\" " >> $SENDERFILE
-		echo $SCOREBOARD | awk '{print split($1,dummy,"")-0}' >> $SENDERFILE
+		echo $SCOREBOARD | awk '{print split($1,dummy,"")}' >> $SENDERFILE
 	else
 		echo -n "\"$ZABBIXSOURCE\" \"custom.apache[$STATNAME]\" " >> $SENDERFILE
 		LINE=`fgrep -w "$STATNAME:" $STATUSFILE`
 		if [[ $? = 0 ]]; then
 			echo $LINE | sed "s/$STATNAME: //" >> $SENDERFILE
 		else
-			echo "-1" >> $SENDERFILE;
+			echo 0 >> $SENDERFILE;
 		fi
 	fi
 done < $CONFIGFILE
