@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>3.0</version>
-    <date>2016-10-20T11:45:13Z</date>
+    <date>2016-10-20T14:41:23Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -981,7 +981,7 @@
             <templates/>
             <screens>
                 <screen>
-                    <name>Apache Overview</name>
+                    <name>Apache - Overview</name>
                     <hsize>2</hsize>
                     <vsize>2</vsize>
                     <screen_items>
@@ -1083,7 +1083,7 @@
             <expression>{Template App Apache Status:custom.apache[failed].last()}=0&#13;
 and&#13;
 {Template App Apache Status:custom.apache[Uptime].last()}&lt;600</expression>
-            <name>{HOST.NAME}: Apache has just been restarted</name>
+            <name>[{HOST.NAME}] Apache has just been restarted</name>
             <url/>
             <status>0</status>
             <priority>1</priority>
@@ -1093,7 +1093,7 @@ and&#13;
         </trigger>
         <trigger>
             <expression>{Template App Apache Status:custom.apache[failed].avg(5m)}=1</expression>
-            <name>{HOST.NAME}: Fail collection Apache data</name>
+            <name>[{HOST.NAME}] Fail collection Apache data</name>
             <url/>
             <status>0</status>
             <priority>3</priority>
@@ -1103,7 +1103,7 @@ and&#13;
         </trigger>
         <trigger>
             <expression>{Template App Apache Status:custom.apache[BusyWorkers].last()}&gt;{Template App Apache Status:custom.apache[TotalWorkers].last()}*0.90</expression>
-            <name>{HOST.NAME}: More than 90% worker are busy</name>
+            <name>[{HOST.NAME}] More than 90% worker are busy</name>
             <url/>
             <status>0</status>
             <priority>2</priority>
@@ -1113,7 +1113,7 @@ and&#13;
         </trigger>
         <trigger>
             <expression>{Template App Apache Status:custom.apache[BusyWorkers].last()}&gt;{Template App Apache Status:custom.apache[TotalWorkers].last()}*0.95</expression>
-            <name>{HOST.NAME}: More than 95% worker are busy</name>
+            <name>[{HOST.NAME}] More than 95% worker are busy</name>
             <url/>
             <status>0</status>
             <priority>3</priority>
