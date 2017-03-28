@@ -106,9 +106,15 @@ TEST=0
 ZABBIXPORT=10051
 ZABBIXSOURCE=localhost
 TIMEOUT=30
-DEFAULTCONFIG="Total Accesses
+DEFAULTCONFIG="ServerVersion
+Total Accesses
 Total kBytes
 CPULoad
+CPUSystem
+CPUUser
+Load1
+Load5
+Load15
 Uptime
 ReqPerSec
 BytesPerSec
