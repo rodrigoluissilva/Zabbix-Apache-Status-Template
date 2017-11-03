@@ -19,6 +19,11 @@ Add this config to your Apache settings
       ExtendedStatus On
     
     </IfModule>
+    
+Put zbxApacheStatusCheck script on the webserver, edit it to change the defaults (at least zabbixserver needs to be changed).
+Schedule it using cron, because is uses zabbix-sender.
+
+In case of problems, try running ./zbxApacheStatusCheck -d or ./zbxApacheStatusCheck --help
 
 - Applications 3
 - Items 28
