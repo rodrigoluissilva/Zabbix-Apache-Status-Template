@@ -12,7 +12,7 @@
 #
  
 name="zbxApacheStatusCheck"
-version="0.3"
+version="0.4"
 
 # Test  if  your  getopt(1)  is this enhanced version or an old version
 getopt --test > /dev/null
@@ -228,21 +228,23 @@ fi
 if [[ -n $URL ]]; then
 	STATUS_URL=$URL
 else
-	if [[ -n $APACHEUSER && -n $APACHEPASSWD ]]; then
-		STATUS_URL="$PROTO://$APACHEUSER:$APACHEPASSWD@$HOST:$PORT/server-status?auto"
-	else
-		STATUS_URL="$PROTO://$HOST:$PORT/server-status?auto"
-	fi
+	STATUS_URL="$PROTO://$HOST:$PORT/server-status?auto"
 fi
 
 # get data using curl or wget
 curl="`which curl`"
 if [ "$curl" ]; then
 	GET_CMD="$curl --insecure --max-time $TIMEOUT --silent --location -H \"Cache-Control: no-cache\" \"$STATUS_URL\""
+	if [[ -n $APACHEUSER && -n $APACHEPASSWD ]]; then
+		GET_CMD="${GET_CMD} --user $APACHEUSER:$APACHEPASSWD"
+	fi
 else
 	wget="`which wget`"
 	if [ "$wget" ]; then
 		GET_CMD="$wget --no-check-certificate --timeout=$TIMEOUT --quiet --header \"Cache-Control: no-cache\" -O - \"$STATUS_URL\""
+		if [[ -n $APACHEUSER && -n $APACHEPASSWD ]]; then
+			GET_CMD="${GET_CMD} --user=$APACHEUSER --password=$APACHEPASSWD"
+		fi
 	else
 		echo "I can not find curl or wget on your system"
 		exit 1
