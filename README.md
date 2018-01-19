@@ -51,7 +51,7 @@ You have to set a cron job to periodically collect statistics and send it to you
 
 ```
 
-In case of problems, try running ./zbxApacheStatusCheck -d or ./zbxApacheStatusCheck --help
+In case of problems, try running `./zbxApacheStatusCheck -d` or `./zbxApacheStatusCheck --help`
 
 Options available as parameters
 
@@ -117,7 +117,7 @@ Options:
 ```
 
 
-##Screenshots##
+## Screenshots
 
 
 Zabbix Apache Workers Overview Graph
