@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2020-08-25T13:21:37Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App Apache Status</template>
+            <name>Template App Apache Status</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Apache</name>
+                </application>
+                <application>
+                    <name>Apache Stats</name>
+                </application>
+                <application>
+                    <name>Apache Worker</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>Apache Workers - Busy</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[BusyWorkers]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Bytes Per Request</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[BytesPerReq]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>B</units>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Bytes Per Second</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[BytesPerSec]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>Bps</units>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Closing Connection</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[ClosingConnection]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - CPU Load</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[CPULoad]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - CPU System</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[CPUSystem]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - CPU User</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[CPUUser]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - DNS Lookup</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[DNSLookup]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Failed Request</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[failed]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <applications>
+                        <application>
+                            <name>Apache</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>BOOL_TO_DECIMAL</type>
+                            <params/>
+                        </step>
+                    </preprocessing>
+                    <request_method>POST</request_method>
+                    <triggers>
+                        <trigger>
+                            <expression>{avg(5m)}=1</expression>
+                            <name>[{HOST.NAME}] Fail collection Apache data</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Apache Workers - Gracefully Finishing</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[GracefullyFinishing]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Idle cleanup of worker</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[IdleCleanupOfWorker]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Idle</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[IdleWorkers]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Keepalive (read)</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[KeepAlive]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - CPU Load (1 min average per core)</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[Load1]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - CPU Load (5 min average per core)</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[Load5]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - CPU Load (15 min average per core)</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[Load15]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Logging</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[Logging]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Open slot with no current process</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[OpenSlotWithNoCurrentProcess]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Reading Request</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[ReadingRequest]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Requests Per Second</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[ReqPerSec]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>r/s</units>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Sending Reply</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[SendingReply]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Server Version</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[ServerVersion]</key>
+                    <delay>0</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>Apache</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                    <triggers>
+                        <trigger>
+                            <expression>{diff(0)}&gt;0</expression>
+                            <name>[{HOST.NAME}] Version of Apache was changed</name>
+                            <priority>INFO</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>Apache Workers - Starting UP</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[StartingUp]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Total Accesses</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[Total Accesses]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Total Data Transfer</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[Total kBytes]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>B</units>
+                    <applications>
+                        <application>
+                            <name>Apache Stats</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>1024</params>
+                        </step>
+                    </preprocessing>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Total</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[TotalWorkers]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache - Uptime</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[Uptime]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>s</units>
+                    <applications>
+                        <application>
+                            <name>Apache</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>Apache Workers - Waiting for Connection</name>
+                    <type>TRAP</type>
+                    <key>custom.apache[WaitingForConnection]</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <units>Workers</units>
+                    <applications>
+                        <application>
+                            <name>Apache Worker</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+            </items>
+            <screens>
+                <screen>
+                    <name>Apache - Overview</name>
+                    <hsize>2</hsize>
+                    <vsize>3</vsize>
+                    <screen_items>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Apache - Workers Overview</name>
+                                <host>Template App Apache Status</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Apache - Workers Busy</name>
+                                <host>Template App Apache Status</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>0</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Apache - Accesses</name>
+                                <host>Template App Apache Status</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Apache - Requests</name>
+                                <host>Template App Apache Status</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>1</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Apache - CPU load</name>
+                                <host>Template App Apache Status</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>0</x>
+                            <y>2</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                        <screen_item>
+                            <resourcetype>0</resourcetype>
+                            <style>0</style>
+                            <resource>
+                                <name>Apache - CPU utilization</name>
+                                <host>Template App Apache Status</host>
+                            </resource>
+                            <width>500</width>
+                            <height>100</height>
+                            <x>1</x>
+                            <y>2</y>
+                            <colspan>1</colspan>
+                            <rowspan>1</rowspan>
+                            <elements>0</elements>
+                            <valign>0</valign>
+                            <halign>0</halign>
+                            <dynamic>0</dynamic>
+                            <sort_triggers>0</sort_triggers>
+                            <url/>
+                            <application/>
+                            <max_columns>3</max_columns>
+                        </screen_item>
+                    </screen_items>
+                </screen>
+            </screens>
+        </template>
+    </templates>
+    <triggers>
+        <trigger>
+            <expression>{Template App Apache Status:custom.apache[failed].last()}=0&#13;
+and&#13;
+{Template App Apache Status:custom.apache[Uptime].last()}&lt;600</expression>
+            <name>[{HOST.NAME}] Apache has just been restarted</name>
+            <priority>INFO</priority>
+        </trigger>
+        <trigger>
+            <expression>{Template App Apache Status:custom.apache[BusyWorkers].last()}&gt;{Template App Apache Status:custom.apache[TotalWorkers].last()}*0.90</expression>
+            <name>[{HOST.NAME}] More than 90% worker are busy</name>
+            <priority>WARNING</priority>
+        </trigger>
+        <trigger>
+            <expression>{Template App Apache Status:custom.apache[BusyWorkers].last()}&gt;{Template App Apache Status:custom.apache[TotalWorkers].last()}*0.95</expression>
+            <name>[{HOST.NAME}] More than 95% worker are busy</name>
+            <priority>AVERAGE</priority>
+        </trigger>
+    </triggers>
+    <graphs>
+        <graph>
+            <name>Apache - Accesses</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[Total Accesses]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[Total kBytes]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>Apache - CPU load</name>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[Load1]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[Load5]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[Load15]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>Apache - CPU utilization</name>
+            <type>STACKED</type>
+            <ymin_type_1>FIXED</ymin_type_1>
+            <ymax_type_1>FIXED</ymax_type_1>
+            <graph_items>
+                <graph_item>
+                    <color>999900</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[CPUSystem]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>009900</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[CPUUser]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>Apache - Requests</name>
+            <graph_items>
+                <graph_item>
+                    <color>00C800</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[BytesPerReq]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>0000C8</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[BytesPerSec]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>00C8C8</color>
+                    <yaxisside>RIGHT</yaxisside>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[ReqPerSec]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>Apache - Workers Busy</name>
+            <type>STACKED</type>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[ClosingConnection]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>F63100</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[DNSLookup]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[GracefullyFinishing]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <color>A54F10</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[IdleCleanupOfWorker]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>4</sortorder>
+                    <color>FC6EA3</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[KeepAlive]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>5</sortorder>
+                    <color>6C59DC</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[Logging]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>6</sortorder>
+                    <color>AC8C14</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[ReadingRequest]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>7</sortorder>
+                    <color>611F27</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[SendingReply]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>8</sortorder>
+                    <color>F230E0</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[StartingUp]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>Apache - Workers Overview</name>
+            <graph_items>
+                <graph_item>
+                    <drawtype>FILLED_REGION</drawtype>
+                    <color>5A2B57</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[TotalWorkers]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <drawtype>BOLD_LINE</drawtype>
+                    <color>2774A4</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[IdleWorkers]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>2</sortorder>
+                    <drawtype>BOLD_LINE</drawtype>
+                    <color>AC8C14</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[BusyWorkers]</key>
+                    </item>
+                </graph_item>
+                <graph_item>
+                    <sortorder>3</sortorder>
+                    <drawtype>BOLD_LINE</drawtype>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Template App Apache Status</host>
+                        <key>custom.apache[OpenSlotWithNoCurrentProcess]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
